@@ -1,0 +1,31 @@
+/*************Nav bar**********/
+nav{
+    display: flex;
+    margin-top: 45px;
+    margin-bottom: 10px;
+    margin-right: 50px;
+    justify-content: flex-end;
+    gap: 50px;
+}
+
+.navigation {
+    width:fit-content;
+    text-align:center;
+    font-size: 24px;
+    margin-right: 60px;
+}
+
+.navigation:hover {
+    font-weight:bold;
+    background-color:yellow; 
+}
+
+.cart-content {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-right: 110px;
+    text-align: right;
+    font-size: 18px;
+}
+
+

@@ -1,0 +1,97 @@
+/*************one item**********/
+
+.product{
+    display:block;
+    width:310px;
+    height:auto;
+    padding:10px;
+    text-align:left;
+
+    font-size: 18px;
+}
+
+/***********prodcut description**********/
+.thumbnail-pic img {
+    width: 100%;
+    border-style:solid;
+    border-width:4px;
+    border-radius:8px;
+    border-color:black;
+}
+
+.product-name {
+    margin-top:5px;
+    margin-bottom:0px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/***********glazing selection**********/
+.glazing {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+label {
+    margin-right: 20px;
+}
+
+select {
+    width:180px;
+    padding: 8px;
+    margin-top:10px;
+    border: 3px solid black;
+
+    font-size: 18px;
+}
+
+/***********pack size selection**********/
+.pack-size {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-pack-size {
+    width: 40px;
+    height: 40px;
+
+    background-color: white;
+    border: 3px solid black;
+
+    font-size: 18px;
+}
+
+.btn-pack-size:hover {
+    font-weight: 700;
+    background-color: lightgray;
+}
+
+/***************price & cart**************/
+.add-to-cart {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-price {
+    font-weight: bold;
+}
+
+.btn-addCart {
+    width: 180px;
+    height: 50px;
+    font-size: 22px;
+    font-weight: 700;
+    background-color: white;
+    border: 3px solid black;
+}
+
+.btn-addCart:hover {
+    cursor:pointer;
+    background-color: yellow;
+}

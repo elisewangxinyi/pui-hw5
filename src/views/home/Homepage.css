@@ -1,0 +1,63 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    /* Set the default font family and color*/
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22px;
+  
+    /* Set the background color*/
+    background-color: white;
+}
+
+.Homepage a {
+    color:black;
+    text-decoration:none;
+}
+
+/***********************Header************************/
+header {
+    display: flex;
+}
+
+#header-logo {
+    width: 450px;
+    padding-top: 30px;
+    padding-left: 40px;
+    flex-shrink: 0;
+}
+
+#header-content {
+    flex-grow: 1;
+    margin-left: 40px;
+}
+
+
+.divider {
+    height: 7px;
+    background-color:black;
+}
+
+header h1 {
+    font-size: 34px;
+    font-weight: 100;
+    margin-bottom: 0px;
+    margin-top: 80px;
+}
+
+
+/********************Product List*********************/
+#product-list {
+    width: 1000px;
+    margin-left:auto;
+    margin-right: auto;
+
+    padding-top: 80px;
+    padding-bottom: 30px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+}
