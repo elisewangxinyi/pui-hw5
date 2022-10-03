@@ -14,7 +14,7 @@ class Popup extends Component {
                     {this.props.addedItem.glazing} glazing
                 </p>
                 <p className="popup-summary">
-                    Pack of {this.props.addedItem.packSize}
+                    Pack of {this.props.addedItem.sizeToDisplaySize[this.props.addedItem.packSize]}
                 </p>
                 <p className="popup-summary">
                     Price: ${this.props.addedItem.price}

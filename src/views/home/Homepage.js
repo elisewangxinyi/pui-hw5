@@ -4,13 +4,23 @@ import Item from '../../components/Item';
 import Navbar from '../../components/Navbar';
 import Popup from '../../components/Popup';
 
+
+//TODO: Search bar not working
 class Roll {
     glazingToPrice = {
         "Keep original": 0,
         "Sugar milk": 0,
         "Vanilla milk": 0.5,
         "Double chocolate": 1.5
-    }
+    };
+
+    sizeToDisplaySize = {
+        1: 1,
+        3: 3,
+        5: 6,
+        10: 12
+    };
+
     constructor(imageURL, bunName, altText, basePrice){
         this.imageURL = imageURL;
         this.bunName = bunName;
@@ -79,7 +89,8 @@ class Homepage extends Component {
             cart: [],
             totalItem: 0,
             totalPrice: 0,
-            popUpSeen: false
+            popUpSeen: false,
+            searchKey: null
         }
     }
 
@@ -89,20 +100,6 @@ class Homepage extends Component {
             price += Number(item.price);
         }
         return price.toFixed(2);
-    }
-
-    handleGlazingChange = (index,event) => {
-        let newItemData = this.state.itemData;
-        newItemData[index].glazingChange(event);
-
-        this.setState({ itemData: [ ...newItemData ]})
-    }
-
-    handleSizeChange = (index,event) => {
-        let newItemData = this.state.itemData;
-        newItemData[index].sizeChange(event);
-
-        this.setState({ itemData: [ ...newItemData ]})
     }
 
     handleAddToCart = (index) => {
@@ -132,6 +129,20 @@ class Homepage extends Component {
         }))
     }
 
+    // handleSearchChange = (event) => {
+    //     const newKey = event.target.value;
+    //     this.state.searchKey = newKey;
+    // }
+
+    handleSearchBtn = () => {
+        const newKey = document.getElementById('search-bar') // can't use this in react
+        console.log(newKey)
+        this.setState (prevState => ({
+            ...prevState,
+            searchKey: newKey
+        }))
+    }
+
     render(){
         return (
             <div className="Homepage">
@@ -153,61 +164,50 @@ class Homepage extends Component {
                     </div>
                 </header>
 
+                <div id='search-sort'>
+                    <input type="text" id='seach-bar'></input>
+                    <button onClick={this.handleSearchBtn}>Search</button>
+                </div>
+
                 <div id='product-list'>
-                    <Item
+                    {this.state.itemData.map((bunObject, idx) => {
+                        console.log(this.state.searchKey)
+                        if (this.state.searchKey == null || bunObject.bunName.includes(this.state.searchKey)){
+
+                            return <Item
+                            key={idx} 
+                            bun = {bunObject}
+                            onAddCart = {this.handleAddToCart}/>
+                            } else {
+                                return <div />
+                            }
+                        }
+                    )}
+
+                    {/* <Item
                         bunIndex = {0}
-                        imageURL ={this.state.itemData[0].imageURL}
-                        bunName = {this.state.itemData[0].bunName}
-                        altText = {this.state.itemData[0].altText}
-                        price = {this.state.itemData[0].price}
-                        onGlazingChange = {this.handleGlazingChange}
-                        onSizeChange = {this.handleSizeChange}
+                        bun = {this.state.itemData[0]}
                         onAddCart = {this.handleAddToCart}/>
                     <Item
                         bunIndex = {1}
-                        imageURL ={this.state.itemData[1].imageURL}
-                        bunName = {this.state.itemData[1].bunName}
-                        altText = {this.state.itemData[1].altText}
-                        price = {this.state.itemData[1].price}
-                        onGlazingChange = {this.handleGlazingChange}
-                        onSizeChange = {this.handleSizeChange}
+                        bun = {this.state.itemData[1]}
                         onAddCart = {this.handleAddToCart}/>
                     <Item
                         bunIndex = {2}
-                        imageURL ={this.state.itemData[2].imageURL}
-                        bunName = {this.state.itemData[2].bunName}
-                        altText = {this.state.itemData[2].altText}
-                        price = {this.state.itemData[2].price}
-                        onGlazingChange = {this.handleGlazingChange}
-                        onSizeChange = {this.handleSizeChange}
+                        bun = {this.state.itemData[2]}
                         onAddCart = {this.handleAddToCart}/>
                     <Item
                         bunIndex = {3}
-                        imageURL ={this.state.itemData[3].imageURL}
-                        bunName = {this.state.itemData[3].bunName}
-                        altText = {this.state.itemData[3].altText}
-                        price = {this.state.itemData[3].price}
-                        onGlazingChange = {this.handleGlazingChange}
-                        onSizeChange = {this.handleSizeChange}
+                        bun = {this.state.itemData[3]}
                         onAddCart = {this.handleAddToCart}/>
                     <Item
                         bunIndex = {4}
-                        imageURL ={this.state.itemData[4].imageURL}
-                        bunName = {this.state.itemData[4].bunName}
-                        altText = {this.state.itemData[4].altText}
-                        price = {this.state.itemData[4].price}
-                        onGlazingChange = {this.handleGlazingChange}
-                        onSizeChange = {this.handleSizeChange}
+                        bun = {this.state.itemData[4]}
                         onAddCart = {this.handleAddToCart}/>
                     <Item
                         bunIndex = {5}
-                        imageURL ={this.state.itemData[5].imageURL}
-                        bunName = {this.state.itemData[5].bunName}
-                        altText = {this.state.itemData[5].altText}
-                        price = {this.state.itemData[5].price}
-                        onGlazingChange = {this.handleGlazingChange}
-                        onSizeChange = {this.handleSizeChange}
-                        onAddCart = {this.handleAddToCart}/>
+                        bun = {this.state.itemData[5]}
+                        onAddCart = {this.handleAddToCart}/> */}
                 </div>
             </div>
         );
