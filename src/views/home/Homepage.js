@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+// import {useRef} from 'react';
 import './Homepage.css';
 import Item from '../../components/Item';
 import Navbar from '../../components/Navbar';
 import Popup from '../../components/Popup';
 
 
-//TODO: Search bar not working
+//TODO: implement sort
 class Roll {
     glazingToPrice = {
         "Keep original": 0,
@@ -91,8 +92,13 @@ class Homepage extends Component {
             totalPrice: 0,
             popUpSeen: false,
             searchKey: null
-        }
+        };
+
+        this.input = '';
+        this.hasProduct = false
     }
+
+    
 
     calcTotalPrice = (itemList) => {
         let price = 0;
@@ -129,17 +135,17 @@ class Homepage extends Component {
         }))
     }
 
-    // handleSearchChange = (event) => {
-    //     const newKey = event.target.value;
-    //     this.state.searchKey = newKey;
-    // }
+    handleSearchChange = (event) => {
+        const newKey = event.target.value;
+        this.input = newKey;
+    }
 
     handleSearchBtn = () => {
-        const newKey = document.getElementById('search-bar') // can't use this in react
-        console.log(newKey)
+        console.log('here')
+        console.log(this.input)
         this.setState (prevState => ({
             ...prevState,
-            searchKey: newKey
+            searchKey: this.input
         }))
     }
 
@@ -165,49 +171,42 @@ class Homepage extends Component {
                 </header>
 
                 <div id='search-sort'>
-                    <input type="text" id='seach-bar'></input>
-                    <button onClick={this.handleSearchBtn}>Search</button>
+                    <div id='search'>
+                        <input type="text" onChange={this.handleSearchChange}></input>
+                        <button onClick={this.handleSearchBtn}>Search</button>
+                    </div>
+
+                    <div id='sort'>
+                        <label>sort by:</label>
+                        <select>
+                            <option value='name'>Name</option>
+                            <option value='basePrice'>Base Price</option>
+                        </select>
+                    </div>
+                    
                 </div>
 
                 <div id='product-list'>
                     {this.state.itemData.map((bunObject, idx) => {
                         console.log(this.state.searchKey)
-                        if (this.state.searchKey == null || bunObject.bunName.includes(this.state.searchKey)){
-
+                        if (this.state.searchKey === null || bunObject.bunName.includes(this.state.searchKey)){
+                            console.log(this.state.searchKey)
+                            this.hasProduct = true;
                             return <Item
-                            key={idx} 
-                            bun = {bunObject}
-                            onAddCart = {this.handleAddToCart}/>
-                            } else {
-                                return <div />
-                            }
-                        }
+                                    key={idx} 
+                                    bun = {bunObject}
+                                    onAddCart = {this.handleAddToCart}/>
+                        } 
+                        else {
+                            this.input = "no match";
+                            return <div key={idx}/>
+                        }}
                     )}
 
-                    {/* <Item
-                        bunIndex = {0}
-                        bun = {this.state.itemData[0]}
-                        onAddCart = {this.handleAddToCart}/>
-                    <Item
-                        bunIndex = {1}
-                        bun = {this.state.itemData[1]}
-                        onAddCart = {this.handleAddToCart}/>
-                    <Item
-                        bunIndex = {2}
-                        bun = {this.state.itemData[2]}
-                        onAddCart = {this.handleAddToCart}/>
-                    <Item
-                        bunIndex = {3}
-                        bun = {this.state.itemData[3]}
-                        onAddCart = {this.handleAddToCart}/>
-                    <Item
-                        bunIndex = {4}
-                        bun = {this.state.itemData[4]}
-                        onAddCart = {this.handleAddToCart}/>
-                    <Item
-                        bunIndex = {5}
-                        bun = {this.state.itemData[5]}
-                        onAddCart = {this.handleAddToCart}/> */}
+                    {!this.hasProduct &&
+                        <div id='no-result'>No match!</div>
+                    }
+
                 </div>
             </div>
         );

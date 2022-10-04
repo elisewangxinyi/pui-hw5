@@ -34,11 +34,11 @@
     align-items: center;
 }
 
-label {
+.glazing label {
     margin-right: 20px;
 }
 
-select {
+.glazing select {
     width:180px;
     padding: 8px;
     margin-top:10px;
@@ -53,6 +53,10 @@ select {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.pack-size label {
+    margin-right: 20px;
 }
 
 .sizeBtn-normal {
