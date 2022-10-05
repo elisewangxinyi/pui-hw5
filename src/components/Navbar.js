@@ -8,15 +8,13 @@ class Navbar extends Component {
             <div id='navbar'>
                 <nav>
                     <div className="navigation">
-                        <a href="gallery.html">PRODUCTS</a>
+                        PRODUCTS
                     </div>
                 
-                    <div className="navigation">
-                        <a href="cart.html">CART</a>
+                    <div className="navigation" onClick={this.props.toggleCart}>
+                        CART
                     </div>
                 </nav>
-                <p className="cart-content">{this.props.totalItem} items</p>
-                <p className="cart-content">Total: ${this.props.totalPrice}</p>
             </div>
         );
     }

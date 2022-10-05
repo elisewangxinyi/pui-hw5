@@ -241,10 +241,10 @@ class Homepage extends Component {
                 </div>
 
                 <div id='product-list'>
-                    {mapDatatoComponent(this)}
-                    {/* {this.state.itemData.map((bunObject, idx) => {
+                    {/* {mapDatatoComponent(this)} */}
+                    {this.state.itemData.map((bunObject, idx) => {
                         if (this.state.searchKey === null || bunObject.bunName.includes(this.state.searchKey)){
-                            // console.log(this.state.itemData)
+                            console.log(this.state.itemData)
                             this.hasProduct = true;
 
                             const result = <Item
@@ -252,7 +252,6 @@ class Homepage extends Component {
                                         bunIndex={idx} 
                                         bun = {bunObject}
                                         onAddCart = {this.handleAddToCart}/>
-                            // console.log(result)
 
                             return result
                         } 
@@ -261,7 +260,7 @@ class Homepage extends Component {
                             return <div key={idx}/>
                         }}
                     )
-                    } */}
+                    }
 
                     {!this.hasProduct &&
                         <div id='no-result'>No match!</div>

@@ -3,20 +3,27 @@ import "./Item.css";
 
 
 class Item extends Component {
-    // constructor(props){
-    //     super(props);
-    //     this.item = props.bun;
-    //     console.log(this.item)
-    //     this.state = {
-    //         imageURL: this.item.imageURL,
-    //         bunName: this.item.bunName,
-    //         altText: this.item.altText,
-    //         price: this.item.price,
-    //         glazing: this.item.glazing,
-    //         packSize: this.item.packSize
-    //     };
-    //     // this.handleGlazingChange = this.handleGlazingChange.bind(this);
-    // }
+    constructor(props){
+        super(props);
+        this.item = props.bun;
+        // console.log(this.item)
+        console.log("constructor")
+        this.state = {
+            imageURL: this.item.imageURL,
+            bunName: this.item.bunName,
+            altText: this.item.altText,
+            price: this.item.price,
+            glazing: this.item.glazing,
+            packSize: this.item.packSize
+        };
+    }
+
+    componentDidMount = () => {
+        console.log("component did mount")
+    }
+    componentDidUpdate = () => {
+        console.log("component did update")
+    }
 
     handleGlazingChange = (event) => {
         this.item.glazingChange(event);
@@ -49,10 +56,10 @@ class Item extends Component {
         return(
             <div className="product">
                 <div className="thumbnail-pic">
-                    <img src={this.props.bun.imageURL} alt={this.props.bun.altText}/>
+                    <img src={this.state.imageURL} alt={this.state.altText}/>
                 </div>
 
-                <h2 className="product-name">{this.props.bun.bunName}</h2>
+                <h2 className="product-name">{this.state.bunName}</h2>
 
                 <div className="glazing">
                     <label>Glazing:</label>
@@ -67,23 +74,23 @@ class Item extends Component {
 
                 <div className="pack-size">
                     <label>Pack size:</label>
-                    <button className={this.props.bun.packSize == sizeOne ? "sizeBtn-click" : "sizeBtn-normal"} 
+                    <button className={this.state.packSize == sizeOne ? "sizeBtn-click" : "sizeBtn-normal"} 
                             value={sizeOne}
                             onClick={(event) => this.handleSizeChange(event)}>1</button>
-                    <button className={this.props.bun.packSize == sizeThree ? "sizeBtn-click" : "sizeBtn-normal"} 
+                    <button className={this.state.packSize == sizeThree ? "sizeBtn-click" : "sizeBtn-normal"} 
                             value={sizeThree}
                             onClick={(event) => this.handleSizeChange(event)}>3</button>
-                    <button className={this.props.bun.packSize == sizeSix ? "sizeBtn-click" : "sizeBtn-normal"} 
+                    <button className={this.state.packSize == sizeSix ? "sizeBtn-click" : "sizeBtn-normal"} 
                             value={sizeSix}
                             onClick={(event) => this.handleSizeChange(event)}>6</button>
-                    <button className={this.props.bun.packSize == sizeTwelve ? "sizeBtn-click" : "sizeBtn-normal"} 
+                    <button className={this.state.packSize == sizeTwelve ? "sizeBtn-click" : "sizeBtn-normal"} 
                             value={sizeTwelve}
                             onClick={(event) => this.handleSizeChange(event)}>12</button>
                 </div>
 
                 <div className="add-to-cart">
                     
-                    <h2 className="item-price">{`$${this.props.bun.price}`}</h2>
+                    <h2 className="item-price">{`$${this.state.price}`}</h2>
                     <button className="btn-addCart" 
                             onClick={() => this.props.onAddCart(this.props.bunIndex)}>
                             Add to Cart

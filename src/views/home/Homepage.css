@@ -34,7 +34,7 @@ header {
 }
 
 
-.divider {
+header hr {
     height: 7px;
     background-color:black;
 }
@@ -45,6 +45,50 @@ header h1 {
     margin-bottom: 0px;
     margin-top: 80px;
 }
+
+/************************Cart**************************/
+
+#cart {
+    width: 80%;
+    border-style: none;
+    border-radius: 10px;
+    background-color: antiquewhite;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 50px;
+
+    font-size: 18px;
+    text-align: center;
+    
+}
+
+#cart hr {
+    height: 7px;
+    background-color:rgba(118, 82, 49, 0.304);
+    border-style: none;
+}
+
+#cart .cart-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 60px;
+    margin-bottom: 20px;
+}
+
+#cart .cart-info p {
+    margin: 0px; 
+}
+
+#cart .cart-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    
+
+    /* justify-content: space-evenly; */
+}
+
 
 /********************Search & Sort*********************/
 #search-sort {

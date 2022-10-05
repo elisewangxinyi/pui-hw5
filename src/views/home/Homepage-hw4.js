@@ -4,6 +4,7 @@ import Item from '../../components/Item';
 import ItemNew from '../../components/Item-hw4';
 import Navbar from '../../components/Navbar';
 import Popup from '../../components/Popup';
+import CartItem from '../../components/CartItem';
 
 class Roll {
     glazingToPrice = {
@@ -88,7 +89,8 @@ class HomepageNew extends Component {
             totalItem: 0,
             totalPrice: 0,
             popUpSeen: false,
-            searchKey: null
+            searchKey: null,
+            showCart: false
         };
 
         this.input = '';
@@ -177,7 +179,15 @@ class HomepageNew extends Component {
 
     }
 
+    handleShowCart = () => {
+        this.setState(prevState => ({
+            ...prevState,
+            showCart: !this.state.showCart
+        }))
+    }
+
     render(){
+        let cartEmpty = this.state.cart.length === 0;
         return (
             <div className="Homepage">
                 <header>
@@ -188,15 +198,36 @@ class HomepageNew extends Component {
                     
                     <div id="header-content">
                         <Navbar 
-                        totalItem = {this.state.totalItem}
-                        totalPrice={this.state.totalPrice}
+                        toggleCart = {this.handleShowCart}
                         />
                         {/*EXAMPLE from: https://medium.com/@daniela.sandoval/creating-a-popup-window-using-js-and-react-4c4bd125da57*/ }
                         {this.state.popUpSeen ? <Popup addedItem={this.state.cart.at(-1)}/> : null}
-                        <hr className="divider"/>
+                        <hr />
                         <h1>Our hand-made cinnamon rolls</h1>
                     </div>
                 </header>
+                
+                {this.state.showCart &&
+                    <div id='cart'>
+                        {/* <hr/> */}
+                        <div className='cart-info'>
+                            <p>Shopping Cart {this.state.totalItem} items</p>
+                            <p>Total: ${this.state.totalPrice}</p>
+                        </div>
+                        
+                        {cartEmpty && <div>The cart is empty!</div>}
+                        {!cartEmpty && 
+                            <div className='cart-content'>
+                                {this.state.cart.map((addedBun, idx) => {
+                                    return <CartItem
+                                            key={idx}
+                                            item = {addedBun}/>
+                                })}
+                            </div>
+                        }
+                        {/* <hr/> */}
+                    </div>
+                }
 
                 <div id='search-sort'>
                     <div id='search'>
@@ -207,7 +238,7 @@ class HomepageNew extends Component {
                     <div id='sort'>
                         <label>sort by:</label>
                         <select onChange={(event) => this.handleSorting(event)}>
-                            <option value='' selected>Please select</option>
+                            <option value=''>Please select</option>
                             <option value='name'>Name</option>
                             <option value='basePrice'>Base Price</option>
                         </select>
@@ -216,7 +247,6 @@ class HomepageNew extends Component {
                 </div>
 
                 <div id='product-list'>
-                    {/* {mapDatatoComponent(this)} */}
                     {this.state.itemData.map((bunObject, idx) => {
                         if (this.state.searchKey === null || bunObject.bunName.includes(this.state.searchKey)){
                             // console.log(this.state.itemData)
@@ -229,8 +259,6 @@ class HomepageNew extends Component {
                                         onGlazingChange = {this.handleGlazingChange}
                                         onSizeChange = {this.handleSizeChange}
                                         onAddCart = {this.handleAddToCart}/>
-                            // console.log(result)
-
                             return result
                         } 
                         else {

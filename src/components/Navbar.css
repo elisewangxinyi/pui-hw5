@@ -18,9 +18,10 @@ nav{
 .navigation:hover {
     font-weight:bold;
     background-color:yellow; 
+    cursor: pointer;
 }
 
-.cart-content {
+.navbar .cart-content {
     margin-top: 0px;
     margin-bottom: 0px;
     padding-right: 110px;
