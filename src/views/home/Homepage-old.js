@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
+// import {useRef} from 'react';
 import './Homepage.css';
 import Item from '../../components/Item';
-import ItemNew from '../../components/Item-hw4';
 import Navbar from '../../components/Navbar';
 import Popup from '../../components/Popup';
-import CartItem from '../../components/CartItem';
 
+
+//TODO: implement sort
 class Roll {
     glazingToPrice = {
         "Keep original": 0,
         "Sugar milk": 0,
         "Vanilla milk": 0.5,
         "Double chocolate": 1.5
-    }
+    };
 
     sizeToDisplaySize = {
         1: 1,
@@ -20,6 +21,7 @@ class Roll {
         5: 6,
         10: 12
     };
+
     constructor(imageURL, bunName, altText, basePrice){
         this.imageURL = imageURL;
         this.bunName = bunName;
@@ -54,7 +56,37 @@ class Roll {
 
 }
 
-class HomepageNew extends Component {
+function mapDatatoComponent(something){
+    let returnList = something.state.itemData.map((bunObject, idx) => {
+        if (something.state.searchKey === null || bunObject.bunName.includes(something.state.searchKey)){
+            // console.log(this.state.itemData)
+            something.hasProduct = true;
+
+            const result = <Item
+                        key={idx} 
+                        bunIndex={idx} 
+                        bun = {bunObject}
+                        onAddCart = {something.handleAddToCart}/>
+            // console.log(result)
+
+            return result
+        } 
+        else {
+            something.input = "no match";
+            return <div key={idx}/>
+        }}
+    )
+    // console.log(returnList)
+    // let modified = returnList.slice(0,2)
+    // console.log(modified)
+    // let result = modified.slice()
+    // result.push(returnList[3])
+    // console.log(result)
+    return returnList
+}
+
+
+class Homepage extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -89,13 +121,14 @@ class HomepageNew extends Component {
             totalItem: 0,
             totalPrice: 0,
             popUpSeen: false,
-            searchKey: null,
-            showCart: false
+            searchKey: null
         };
 
         this.input = '';
         this.hasProduct = false
     }
+
+    
 
     calcTotalPrice = (itemList) => {
         let price = 0;
@@ -105,21 +138,8 @@ class HomepageNew extends Component {
         return price.toFixed(2);
     }
 
-    handleGlazingChange = (index,event) => {
-        let newItemData = this.state.itemData;
-        newItemData[index].glazingChange(event);
-
-        this.setState({ itemData: [ ...newItemData ]})
-    }
-
-    handleSizeChange = (index,event) => {
-        let newItemData = this.state.itemData;
-        newItemData[index].sizeChange(event);
-
-        this.setState({ itemData: [ ...newItemData ]})
-    }
-
     handleAddToCart = (index) => {
+        console.log(index)
         this.handlePopUp();
         let newCart = this.state.cart;
         this.state.itemData[index].addToList(newCart);
@@ -160,6 +180,7 @@ class HomepageNew extends Component {
         }))
     }
 
+    //TODO: newItemdata is sorted correctly but not rendered?
     handleSorting = (event) => {
         const sortKey = event.target.value;
         let newItemData = this.state.itemData.slice();
@@ -171,7 +192,9 @@ class HomepageNew extends Component {
             newItemData.sort((a, b) => 
                 a.basePrice - b.basePrice)
         }
-       
+
+        // console.log(newItemData)
+        
         this.setState(prevState => ({
             ...prevState,
             itemData: [...newItemData]
@@ -179,15 +202,8 @@ class HomepageNew extends Component {
 
     }
 
-    handleShowCart = () => {
-        this.setState(prevState => ({
-            ...prevState,
-            showCart: !this.state.showCart
-        }))
-    }
-
     render(){
-        let cartEmpty = this.state.cart.length === 0;
+        
         return (
             <div className="Homepage">
                 <header>
@@ -198,36 +214,15 @@ class HomepageNew extends Component {
                     
                     <div id="header-content">
                         <Navbar 
-                        toggleCart = {this.handleShowCart}
+                        totalItem = {this.state.totalItem}
+                        totalPrice={this.state.totalPrice}
                         />
                         {/*EXAMPLE from: https://medium.com/@daniela.sandoval/creating-a-popup-window-using-js-and-react-4c4bd125da57*/ }
                         {this.state.popUpSeen ? <Popup addedItem={this.state.cart.at(-1)}/> : null}
-                        <hr />
+                        <hr className="divider"/>
                         <h1>Our hand-made cinnamon rolls</h1>
                     </div>
                 </header>
-                
-                {this.state.showCart &&
-                    <div id='cart'>
-                        {/* <hr/> */}
-                        <div className='cart-info'>
-                            <p>Shopping Cart {this.state.totalItem} items</p>
-                            <p>Total: ${this.state.totalPrice}</p>
-                        </div>
-                        
-                        {cartEmpty && <div>The cart is empty!</div>}
-                        {!cartEmpty && 
-                            <div className='cart-content'>
-                                {this.state.cart.map((addedBun, idx) => {
-                                    return <CartItem
-                                            key={idx}
-                                            item = {addedBun}/>
-                                })}
-                            </div>
-                        }
-                        {/* <hr/> */}
-                    </div>
-                }
 
                 <div id='search-sort'>
                     <div id='search'>
@@ -238,7 +233,6 @@ class HomepageNew extends Component {
                     <div id='sort'>
                         <label>sort by:</label>
                         <select onChange={(event) => this.handleSorting(event)}>
-                            <option value=''>Please select</option>
                             <option value='name'>Name</option>
                             <option value='basePrice'>Base Price</option>
                         </select>
@@ -247,18 +241,18 @@ class HomepageNew extends Component {
                 </div>
 
                 <div id='product-list'>
+                    {/* {mapDatatoComponent(this)} */}
                     {this.state.itemData.map((bunObject, idx) => {
                         if (this.state.searchKey === null || bunObject.bunName.includes(this.state.searchKey)){
-                            // console.log(this.state.itemData)
+                            console.log(this.state.itemData)
                             this.hasProduct = true;
 
-                            const result = <ItemNew
+                            const result = <Item
                                         key={idx} 
                                         bunIndex={idx} 
                                         bun = {bunObject}
-                                        onGlazingChange = {this.handleGlazingChange}
-                                        onSizeChange = {this.handleSizeChange}
                                         onAddCart = {this.handleAddToCart}/>
+
                             return result
                         } 
                         else {
@@ -278,4 +272,4 @@ class HomepageNew extends Component {
     }
 }
 
-export default HomepageNew;
+export default Homepage;

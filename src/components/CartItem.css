@@ -20,7 +20,8 @@
 
 .cartItem button {
     border-style:none;
-    background-color:white;
+    border-radius: 3px;
+    background-color: rgb(245, 196, 132);
     text-decoration:underline;
     font-weight:bold;
 }
